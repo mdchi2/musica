@@ -342,7 +342,7 @@ body {
 
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 120px;
+  grid-template-columns: 1fr 1.2fr 180px;
   padding: 16px 24px;
   background: rgba(10, 12, 24, 0.8);
   border-bottom: 1px solid var(--border-color);
@@ -397,7 +397,7 @@ body {
 
 .table-row {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 120px;
+  grid-template-columns: 1fr 1.2fr 180px;
   padding: 14px 24px;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
@@ -511,18 +511,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 6px;
 }
 
 .youtube-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: rgba(255, 0, 0, 0.15);
   border: 1px solid rgba(255, 0, 0, 0.3);
   color: #ff4d4d;
-  padding: 6px 14px;
+  padding: 6px 11px;
   border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   text-decoration: none;
   transition: var(--transition-fast);
@@ -533,6 +534,29 @@ body {
   color: #ffffff;
   border-color: var(--youtube-red);
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.lyrics-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #60a5fa;
+  padding: 6px 11px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.lyrics-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
   transform: translateY(-1px);
 }
 
@@ -567,13 +591,13 @@ body {
 /* Mobile responsive layout */
 @media (max-width: 600px) {
   .table-header {
-    grid-template-columns: 1fr 1fr 90px;
-    padding: 12px 14px;
+    grid-template-columns: 1fr 1fr 145px;
+    padding: 12px 10px;
     font-size: 0.75rem;
   }
   .table-row {
-    grid-template-columns: 1fr 1fr 90px;
-    padding: 12px 14px;
+    grid-template-columns: 1fr 1fr 145px;
+    padding: 12px 10px;
   }
   .singer-avatar {
     width: 30px;
@@ -586,9 +610,9 @@ body {
   .brand-info h1 {
     font-size: 1.6rem;
   }
-  .youtube-btn {
-    padding: 5px 10px;
-    font-size: 0.75rem;
+  .youtube-btn, .lyrics-btn {
+    padding: 5px 8px;
+    font-size: 0.72rem;
   }
   .genre-pill {
     display: none; /* hide genre pills on very small screens to fit title */
@@ -699,6 +723,16 @@ body {
   background: var(--youtube-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+}
+
+.link-lyrics {
+  background: #2563eb;
+}
+
+.link-lyrics:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
 }
 
 .close-player {
