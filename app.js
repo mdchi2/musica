@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
   const searchClear = document.getElementById('searchClear');
   const artistSelect = document.getElementById('artistSelect');
-  const genreSelect = document.getElementById('genreSelect');
   const alphabetBar = document.getElementById('alphabetBar');
   const totalCountEl = document.getElementById('totalCount');
   const totalSingersEl = document.getElementById('totalSingers');
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize App
   function init() {
     setupArtistSelect();
-    setupGenreSelect();
     setupAlphabetBar();
     renderStats();
     applyFiltersAndRender();
@@ -51,25 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
       opt.value = artist;
       opt.textContent = artist;
       artistSelect.appendChild(opt);
-    });
-  }
-
-  // Populate Genre Dropdown
-  function setupGenreSelect() {
-    const genreCounts = {};
-    allSongs.forEach(s => {
-      const g = s.genero || 'Variado / Pop';
-      genreCounts[g] = (genreCounts[g] || 0) + 1;
-    });
-
-    const sortedGenres = Object.keys(genreCounts).sort((a, b) => a.localeCompare(b, 'es'));
-
-    genreSelect.innerHTML = '<option value="">Todos los Géneros (' + sortedGenres.length + ')</option>';
-    sortedGenres.forEach(genre => {
-      const opt = document.createElement('option');
-      opt.value = genre;
-      opt.textContent = `${genre} (${genreCounts[genre]})`;
-      genreSelect.appendChild(opt);
     });
   }
 
@@ -99,32 +78,25 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderStats() {
     const totalSongs = allSongs.length;
     const uniqueSingers = new Set(allSongs.map(s => s.cantante.toLowerCase())).size;
-    const uniqueGenres = new Set(allSongs.map(s => (s.genero || '').toLowerCase())).size;
     
     totalCountEl.textContent = totalSongs;
     totalSingersEl.textContent = uniqueSingers;
-    if (totalGenresEl) totalGenresEl.textContent = uniqueGenres;
+    if (totalGenresEl) totalGenresEl.textContent = '0';
   }
 
   // Filter, Sort and Render Songs
   function applyFiltersAndRender() {
     let filtered = allSongs.filter(song => {
-      // Search text filter (matches cantante, cancion, or genero)
+      // Search text filter (matches cantante or cancion)
       if (currentSearch) {
         const q = currentSearch.toLowerCase();
         const matchesSinger = song.cantante.toLowerCase().includes(q);
         const matchesSong = song.cancion.toLowerCase().includes(q);
-        const matchesGenre = (song.genero || '').toLowerCase().includes(q);
-        if (!matchesSinger && !matchesSong && !matchesGenre) return false;
+        if (!matchesSinger && !matchesSong) return false;
       }
 
       // Artist dropdown filter
       if (currentArtist && song.cantante !== currentArtist) {
-        return false;
-      }
-
-      // Genre dropdown filter
-      if (currentGenre && song.genero !== currentGenre) {
         return false;
       }
 
@@ -157,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="empty-state">
           <div class="empty-icon">🎵</div>
           <div class="empty-title">No se encontraron canciones</div>
-          <div class="empty-desc">Intenta ajustar tu búsqueda o seleccionar otro género.</div>
+          <div class="empty-desc">Intenta ajustar tu búsqueda o seleccionar otro cantante.</div>
         </div>
       `;
       return;
@@ -171,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
       row.setAttribute('data-id', song.id);
 
       const firstLetter = song.cantante.charAt(0).toUpperCase();
-      const genreName = song.genero || 'Variado';
       const query = encodeURIComponent(`${song.cantante} ${song.cancion}`);
       const youtubeUrl = `https://www.youtube.com/results?search_query=${query}`;
       const googleLyricsUrl = `https://www.google.com/search?q=${encodeURIComponent(`letra ${song.cantante} ${song.cancion}`)}`;
@@ -185,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="song-icon">♫</span>
           <div class="song-info-wrapper">
             <span class="song-title">${escapeHtml(song.cancion)}</span>
-            <span class="genre-pill" title="Filtrar por género: ${escapeHtml(genreName)}">${escapeHtml(genreName)}</span>
           </div>
         </div>
         <div class="col-actions">
@@ -199,17 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </a>
         </div>
       `;
-
-      // Genre pill quick filter click
-      const genrePill = row.querySelector('.genre-pill');
-      if (genrePill) {
-        genrePill.addEventListener('click', (e) => {
-          e.stopPropagation();
-          genreSelect.value = genreName;
-          currentGenre = genreName;
-          applyFiltersAndRender();
-        });
-      }
 
       // YouTube button click
       const ytBtn = row.querySelector('.youtube-btn');
@@ -254,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Update Player Bar
-    playerSinger.textContent = `${song.cantante} • ${song.genero || 'Música'}`;
+    playerSinger.textContent = song.cantante;
     playerSong.textContent = song.cancion;
 
     const query = encodeURIComponent(`${song.cantante} ${song.cancion}`);
@@ -285,12 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Artist Select
     artistSelect.addEventListener('change', (e) => {
       currentArtist = e.target.value;
-      applyFiltersAndRender();
-    });
-
-    // Genre Select
-    genreSelect.addEventListener('change', (e) => {
-      currentGenre = e.target.value;
       applyFiltersAndRender();
     });
 
