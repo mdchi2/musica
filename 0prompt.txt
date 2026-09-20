@@ -1,0 +1,4 @@
+1) listar unicamente los cantantes del archivo 1cantantes.txt
+2) quitar las canciones y quitar el boton las letras
+3) el boton de youtube hace el direccionamiento unicamente por cantante
+

@@ -342,7 +342,7 @@ body {
 
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 180px;
+  grid-template-columns: 1fr 140px;
   padding: 16px 24px;
   background: rgba(10, 12, 24, 0.8);
   border-bottom: 1px solid var(--border-color);
@@ -397,7 +397,7 @@ body {
 
 .table-row {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 180px;
+  grid-template-columns: 1fr 140px;
   padding: 14px 24px;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
@@ -423,9 +423,16 @@ body {
 .col-singer {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding-right: 12px;
   overflow: hidden;
+}
+
+.singer-index {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  min-width: 24px;
 }
 
 .singer-avatar {
@@ -591,31 +598,28 @@ body {
 /* Mobile responsive layout */
 @media (max-width: 600px) {
   .table-header {
-    grid-template-columns: 1fr 1fr 145px;
-    padding: 12px 10px;
+    grid-template-columns: 1fr 110px;
+    padding: 12px 14px;
     font-size: 0.75rem;
   }
   .table-row {
-    grid-template-columns: 1fr 1fr 145px;
-    padding: 12px 10px;
+    grid-template-columns: 1fr 110px;
+    padding: 12px 14px;
   }
   .singer-avatar {
-    width: 30px;
-    height: 30px;
-    font-size: 0.75rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
-  .singer-name, .song-title {
-    font-size: 0.85rem;
+  .singer-name {
+    font-size: 0.88rem;
   }
   .brand-info h1 {
     font-size: 1.6rem;
   }
-  .youtube-btn, .lyrics-btn {
-    padding: 5px 8px;
-    font-size: 0.72rem;
-  }
-  .genre-pill {
-    display: none; /* hide genre pills on very small screens to fit title */
+  .youtube-btn {
+    padding: 6px 10px;
+    font-size: 0.74rem;
   }
 }
 
@@ -679,17 +683,17 @@ body {
   overflow: hidden;
 }
 
-.player-song {
+.player-singer-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--text-dim);
 }
 
 .player-singer {
-  font-size: 0.82rem;
+  font-weight: 700;
+  font-size: 1.05rem;
   color: var(--primary-cyan);
   white-space: nowrap;
   overflow: hidden;
